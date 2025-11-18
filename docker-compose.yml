@@ -1,0 +1,63 @@
+version: "3.8"
+
+services:
+  monerod:
+    image: ghcr.io/sethforprivacy/simple-monerod:latest
+    container_name: monerod
+    restart: unless-stopped
+    volumes:
+      - monero-data:/home/monero/.bitmonero
+    ports:
+      - "18080:18080"
+    command:
+      - --rpc-restricted-bind-ip=0.0.0.0 
+      - --rpc-restricted-bind-port=18089
+      - "--no-igd"
+      - "--zmq-pub=tcp://0.0.0.0:18083"
+      - "--enable-dns-blocklist"
+      - "--prune-blockchain"
+
+  p2pool:
+    image: sethsimmons/p2pool:latest
+    container_name: p2pool
+    restart: unless-stopped
+    depends_on:
+      - monerod
+    volumes:
+      - p2pool-data:/home/p2pool
+      - /dev/hugepages:/dev/hugepages:rw
+    ports:
+      - "37889:37889"
+      - "127.0.0.1:3333:3333"
+    command: >
+          --wallet ${WALLET}
+          --host monerod
+          --rpc-port 18089
+          --stratum 0.0.0.0:3333
+          --p2p 0.0.0.0:37889
+          ${P2POOL_FLAG}
+
+  xmrig:
+    image: miningcontainers/xmrig:latest
+    container_name: xmrig
+    restart: unless-stopped
+    depends_on:
+      - p2pool
+    volumes:
+      - /dev/hugepages:/dev/hugepages:rw
+    command:
+      - "-o"
+      - "p2pool:3333"
+      - "-u"
+      - "${WALLET}"
+      - "-p"
+      - "worker1"
+      - "-k"
+      - "--cpu-max-threads-hint=${CPU_PERCENTAGE}"
+      - "--huge-pages"
+    ulimits:
+      memlock: -1
+
+volumes:
+  monero-data:
+  p2pool-data:
