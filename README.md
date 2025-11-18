@@ -30,6 +30,11 @@ You can also follow me on [X/Twitter @MelkoXMR](https://x.com/MelkoXMR)
     * [Get Docker Compose](https://docs.docker.com/compose/install/)
 
     If it's too complicated just ask your favorite LLM how to install docker & docker compose on your OS and i'm sure it will be happy to help you
+
+Optional : **If you want to allocate huge pages memory access for better perfs on your mining**
+
+```bash sudo sysctl -w vm.nr_hugepages=1280```
+
 2.  **Clone this Project (or Download Files).**
     If you have Git:
     ```bash
