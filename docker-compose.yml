@@ -41,6 +41,7 @@ services:
     image: miningcontainers/xmrig:latest
     container_name: xmrig
     restart: unless-stopped
+    privileged: ${PRIVILEGED}
     depends_on:
       - p2pool
     volumes:

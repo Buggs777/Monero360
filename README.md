@@ -7,10 +7,10 @@ Help the community to secure the blockchain by running this simple, all-in-one `
 It's designed to be "set it and forget it." All services will automatically restart on machine reboot.
 
 ## Table of Contents
-* [Quick Start](#-quick-start)
-* [Checking the Status](#-checking-the-status)
-* [Configuration](#-configuration)
-* [Services used](#-services-used)
+* [Quick Start](#quick-start)
+* [Checking the Status](#checking-the-status)
+* [Configuration](#configuration)
+* [Services used](#services-used)
 
 
 ## Intro : 
@@ -93,7 +93,7 @@ While waiting: You will see connection refused or DNS error (this is normal, p2p
 
 Success: Once p2pool is ready, xmrig will connect. The magic word you are looking for is ACCEPTED (in green text). This confirms you have successfully submitted a share to the pool.
 
-## - Configuration
+## Configuration
 
 All user configuration is done in the `.env` file.
 
