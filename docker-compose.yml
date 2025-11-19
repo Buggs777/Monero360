@@ -9,6 +9,7 @@ services:
       - monero-data:/home/monero/.bitmonero
     ports:
       - "18080:18080"
+      - "127.0.0.1:18089:18089"
     command:
       - --rpc-restricted-bind-ip=0.0.0.0 
       - --rpc-restricted-bind-port=18089
@@ -46,6 +47,8 @@ services:
       - p2pool
     volumes:
       - /dev/hugepages:/dev/hugepages:rw
+    ports:
+      - "127.0.0.1:16000:16000"
     command:
       - "-o"
       - "p2pool:3333"
@@ -56,6 +59,8 @@ services:
       - "-k"
       - "--cpu-max-threads-hint=${CPU_PERCENTAGE}"
       - "--huge-pages"
+      - "--http-host=0.0.0.0"
+      - "--http-port=16000"
     ulimits:
       memlock: -1
 
